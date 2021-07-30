@@ -1,4 +1,6 @@
-require: rubocop-rails
+require:
+  - rubocop-rails
+  # TODO: add rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -6,4 +8,8 @@ AllCops:
 Rails/FilePath:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/BlockLength:
   Enabled: false
