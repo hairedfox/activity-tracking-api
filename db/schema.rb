@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_225522) do
+ActiveRecord::Schema.define(version: 2021_07_30_225901) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "goal_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.bigint "activity_id", null: false
+    t.boolean "done", default: false
+    t.integer "activity_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_id"], name: "index_goal_activities_on_activity_id"
+    t.index ["goal_id", "activity_id"], name: "index_goal_activities_on_goal_id_and_activity_id", unique: true
+    t.index ["goal_id"], name: "index_goal_activities_on_goal_id"
   end
 
   create_table "goals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -38,5 +50,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_225522) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "goal_activities", "activities"
+  add_foreign_key "goal_activities", "goals"
   add_foreign_key "goals", "users"
 end
