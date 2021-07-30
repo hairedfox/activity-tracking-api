@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_225901) do
+ActiveRecord::Schema.define(version: 2021_07_30_231014) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2021_07_30_225901) do
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
+  create_table "targets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "goal_activity_id", null: false
+    t.integer "expected_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_activity_id"], name: "index_targets_on_goal_activity_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -53,4 +61,5 @@ ActiveRecord::Schema.define(version: 2021_07_30_225901) do
   add_foreign_key "goal_activities", "activities"
   add_foreign_key "goal_activities", "goals"
   add_foreign_key "goals", "users"
+  add_foreign_key "targets", "goal_activities"
 end
