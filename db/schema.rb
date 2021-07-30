@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_231014) do
+ActiveRecord::Schema.define(version: 2021_07_30_231607) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "counters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "quantity", default: 0
+    t.string "unit", default: "times"
+    t.bigint "goal_activity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_activity_id"], name: "index_counters_on_goal_activity_id"
   end
 
   create_table "goal_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -58,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_231014) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "counters", "goal_activities"
   add_foreign_key "goal_activities", "activities"
   add_foreign_key "goal_activities", "goals"
   add_foreign_key "goals", "users"
