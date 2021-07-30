@@ -3,6 +3,7 @@ class GoalActivity < ApplicationRecord
   belongs_to :activity
   has_one :target, dependent: :destroy
   has_many :counters, dependent: :destroy
+  has_many :streaks, dependent: :destroy
 
   enum activity_type: {
     check: 1,
